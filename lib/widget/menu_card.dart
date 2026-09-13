@@ -70,19 +70,11 @@ class MenuCard extends StatelessWidget {
                     (constraints.maxWidth * 0.42)
                         .clamp(130.0, 190.0);
 
-                return Column(
+                  return Column(
                   children: [
-                    // ==========================================
-                    // BAGIAN ATAS
-                    // ==========================================
-
-                    Expanded(
-                      child: Row(
+                    Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ==============================
-                          // INFORMASI MENU
-                          // ==============================
 
                           Expanded(
                             child: Column(
@@ -137,10 +129,6 @@ class MenuCard extends StatelessWidget {
 
                           const SizedBox(width: 14),
 
-                          // ==============================
-                          // GAMBAR MENU RESPONSIVE
-                          // ==============================
-
                           SizedBox(
                             width: imageWidth,
                             child: AspectRatio(
@@ -159,8 +147,6 @@ class MenuCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-
                     const SizedBox(height: 14),
 
                     // Garis pemisah
