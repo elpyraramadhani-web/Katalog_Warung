@@ -8,6 +8,7 @@ import 'functions/aturan_pesanan.dart';
 import 'pages/detail_menu_page.dart';
 import 'widget/app_bar.dart';
 import 'widget/checkout_bar.dart';
+import 'pages/detail_pemesanan_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -643,17 +644,29 @@ class MyApp extends StatelessWidget {
                     },
                   );
                 }
+              )
+            )
+              ],
               ),
             ),
-            BottomNavigationBar: CheckoutBar(
+            bottomNavigationBar: CheckoutBar(
               jumlahPesanan: _hitungJumlahSemuaPesanan(), 
               totalHarga: _hitungTotalPesanan(),
-              onCheckot: (){
-
-              })
-          ],
+              onCheckout: (){
+                Navigator.push(context,
+                MaterialPageRoute(
+                  builder: (context) => DetailPemesananPage(
+                    daftarMenu: daftarMenu, 
+                    jumlahPesanan: _jumlahPesanan, 
+                    onTambah: _tambahJumlah, 
+                    onKurang: _kurangJumlah
+                    )
+                  )
+                ).then((_) {
+                  setState(() {} );
+                  });
+              }
         )
-      )
-    );
+      );
   }
 }
