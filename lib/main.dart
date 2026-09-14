@@ -9,6 +9,10 @@ import 'pages/detail_menu_page.dart';
 import 'widget/app_bar.dart';
 import 'widget/checkout_bar.dart';
 import 'pages/detail_pemesanan_page.dart';
+import 'constants/colors.dart';
+import 'widget/tombol_kategori.dart';
+import 'widget/kotak_ringkasan.dart';
+import 'widget/empty_search.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,35 +23,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build (BuildContext context) {
-    //tema warna aplikasi
-    const Color primaryColor = Color(0xFFC62828);
-    const Color secondaryColor = Color(0xFFE53935);
-    const Color backgroundColor = Color(0xFFFFF3E0);
-    const Color cardColor = Color(0xFFFFFFFF);
-    const Color textColor = Color(0xFF3E2723);
 
     return MaterialApp(
       title: 'KASIR WARUNG AYAMNIN',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: backgroundColor,
+        scaffoldBackgroundColor: AppColors.background,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: primaryColor,
-          primary: primaryColor,
-          secondary: secondaryColor,
-          surface: cardColor,
+          seedColor: AppColors.primary,
+          primary: AppColors.primary,
+          secondary: AppColors.secondary,
+          surface: AppColors.card,
         ),
-        cardColor: cardColor,
+        cardColor: AppColors.card,
         appBarTheme: const AppBarTheme(
-          backgroundColor: primaryColor,
+          backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
           centerTitle: true,
           elevation: 0,
         ),
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: textColor),
-          titleMedium: TextStyle(color: textColor, fontWeight: FontWeight.bold)
+          bodyMedium: TextStyle(color: AppColors.text),
+          titleMedium: TextStyle(color: AppColors.text, fontWeight: FontWeight.bold)
         ),
         fontFamily: 'Roboto',
       ),
@@ -136,71 +134,6 @@ class MyApp extends StatelessWidget {
     return totalStok;
   }
 
-  Widget _kotakRingkasan({
-    required String judul,
-    required String nilai,
-    required IconData icon,
-  }) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(9),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFEBEE),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                icon,
-                color: const Color(0xFFC62828),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  judul,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF757575),
-                  ),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  nilai,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF3E2723),
-                  ),
-                ),
-              ],
-            ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
     String _formatRupiah(int value) {
     final String angka = value.toString();
     final StringBuffer hasil = StringBuffer();
@@ -214,74 +147,6 @@ class MyApp extends StatelessWidget {
     }
 
     return 'Rp$hasil';
-  }
-
-  Widget _emptySearchView(){
-    return Center(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsetsGeometry.symmetric(
-            horizontal: 24,
-            vertical: 20,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                TImages.emptySearch,
-                width: 220,
-                height: 220,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(height: 12),
-              
-              const Text(
-                'Menu Tidak Ditemukan',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF3E2723)
-                ),
-              ),
-              const SizedBox(height: 8),
-
-              const Text(
-                'Coba cari dengan menu yang berbeda',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF757575)
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              OutlinedButton.icon(
-                onPressed: () {
-                  _searchController.clear();
-                  _filterMenu('');
-                },
-                icon: const Icon(Icons.refresh),
-                label: const Text('Tampilkan Semua Menu'),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor:const Color(0xFFC62828) ,
-                  side: const BorderSide(
-                    color: Color(0xFFC62828)
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                    vertical: 12
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(12)
-                  )
-                )
-               )
-            ],
-          ), 
-          ),
-      ),
-    );
   }
 
     @override
@@ -352,54 +217,6 @@ class MyApp extends StatelessWidget {
             );
           }
         });
-      }
-
-      Widget _tombolKategori(String kategori) {
-        final bool aktif = _kategori == kategori;
-
-        return InkWell(
-          onTap: () => _pilihKategori(kategori),
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 10
-            ),
-            decoration: BoxDecoration(
-              color: aktif
-                ? const Color(0xFF198754)
-                : Colors.transparent,
-              border: Border.all(
-                color: const Color(0xFF43A982),
-                width: 1.5,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (aktif) ...[
-                  const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                      size: 18,
-                  ),
-                  const SizedBox(width: 6,)
-                ],
-                Text(
-                  kategori,
-                  style: TextStyle(
-                    color: aktif
-                      ? Colors.white
-                      : const Color(0xFF286F5C),
-                      fontWeight: 
-                        aktif ? FontWeight.bold : FontWeight.w500,
-                  ),
-                )
-              ],
-            ),
-          ),
-        );
       }
 
     void _tambahJumlah(int indexMenu) {
@@ -493,7 +310,6 @@ class MyApp extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // TOMBOL SORTING
                           PopupMenuButton<String>(
                             onSelected: _urutkanMenu,
                             itemBuilder: (context) => const [
@@ -514,7 +330,7 @@ class MyApp extends StatelessWidget {
                               decoration: BoxDecoration(
                                 color: Colors.transparent,
                                 border: Border.all(
-                                  color: const Color(0xFFC62828),
+                                  color: AppColors.primary,
                                   width: 1.5,
                                 ),
                                 borderRadius: BorderRadius.circular(12),
@@ -524,14 +340,14 @@ class MyApp extends StatelessWidget {
                                 children: [
                                   const Icon(
                                     Icons.swap_vert,
-                                    color: Color(0xFFC62828),
+                                    color: AppColors.primary,
                                     size: 22,
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
                                     _urutan,
                                     style: const TextStyle(
-                                      color: Color(0xFFC62828),
+                                      color: AppColors.primary,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -539,30 +355,48 @@ class MyApp extends StatelessWidget {
                               ),
                             ),
                           ),
-
+ 
                           const SizedBox(width: 8),
-
-                          _tombolKategori('Semua'),
-
+                          TombolKategori(
+                            kategori: 'Semua',
+                            aktif: _kategori == 'Semua',
+                            onTap: () => _pilihKategori('Semua'),
+                          ),
+ 
                           const SizedBox(width: 8),
-
-                          _tombolKategori('Ayam Geprek'),
-
+                          TombolKategori(
+                            kategori: 'Ayam Geprek',
+                            aktif: _kategori == 'Ayam Geprek',
+                            onTap: () => _pilihKategori('Ayam Geprek'),
+                          ),
+ 
                           const SizedBox(width: 8),
-
-                          _tombolKategori('Ayam Crispy'),
-
+                          TombolKategori(
+                            kategori: 'Ayam Crispy',
+                            aktif: _kategori == 'Ayam Crispy',
+                            onTap: () => _pilihKategori('Ayam Crispy'),
+                          ),
+ 
                           const SizedBox(width: 8),
-
-                          _tombolKategori('Rice Bowl'),
-
+                          TombolKategori(
+                            kategori: 'Rice Bowl',
+                            aktif: _kategori == 'Rice Bowl',
+                            onTap: () => _pilihKategori('Rice Bowl'),
+                          ),
+ 
                           const SizedBox(width: 8),
-
-                          _tombolKategori('Paket Hemat'),
-
+                          TombolKategori(
+                            kategori: 'Paket Hemat',
+                            aktif: _kategori == 'Paket Hemat',
+                            onTap: () => _pilihKategori('Paket Hemat'),
+                          ),
+ 
                           const SizedBox(width: 8),
-
-                          _tombolKategori('Minuman'),
+                          TombolKategori(
+                            kategori: 'Minuman',
+                            aktif: _kategori == 'Minuman',
+                            onTap: () => _pilihKategori('Minuman'),
+                          ),
                         ],
                       ),
                     ),
@@ -572,25 +406,25 @@ class MyApp extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            Row(
-              children: [
-                _kotakRingkasan(
-                  judul: 'Menu Aktif',
-                  nilai: '${_hitungJumlahMenu()}',
-                  icon: Icons.restaurant_menu,
-                ),
+                      Row(
+                        children: [
+                          KotakRingkasan(
+                            judul: 'Menu Aktif',
+                            nilai: '${_hitungJumlahMenu()}',
+                            icon: Icons.restaurant_menu,
+                          ),
 
-                const SizedBox(width: 12),
+                          const SizedBox(width: 12),
 
-                _kotakRingkasan(
-                  judul: 'Total Stok',
-                  nilai: '${_hitungTotalStok()} porsi',
-                  icon: Icons.inventory_2_outlined,
-                ),
-              ],
-            ),
+                          KotakRingkasan(
+                            judul: 'Total Stok',
+                            nilai: '${_hitungTotalStok()} porsi',
+                            icon: Icons.inventory_2_outlined,
+                          ),
+                        ],
+                      ),
 
-            const SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
             Expanded(
               child: LayoutBuilder(
@@ -606,8 +440,13 @@ class MyApp extends StatelessWidget {
                   }
 
                   if (filteredMenus.isEmpty) {
-                    return _emptySearchView();
-                  }
+                  return EmptySearch(
+                    onReset: () {
+                      _searchController.clear();
+                      _filterMenu('');
+                    },
+                  );
+                }
 
                   return GridView.builder(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -663,23 +502,31 @@ class MyApp extends StatelessWidget {
               ),
             ),
             bottomNavigationBar: CheckoutBar(
-              jumlahPesanan: _hitungJumlahSemuaPesanan(), 
-              totalHarga: _hitungTotalPesanan(),
-              onCheckout: (){
-                Navigator.push(context,
+            jumlahPesanan: _hitungJumlahSemuaPesanan(),
+            totalHarga: _hitungTotalPesanan(),
+            onCheckout: () async {
+              final hasil = await Navigator.push(
+                context,
                 MaterialPageRoute(
                   builder: (context) => DetailPemesananPage(
-                    daftarMenu: daftarMenu, 
-                    jumlahPesanan: _jumlahPesanan, 
-                    onTambah: _tambahJumlah, 
-                    onKurang: _kurangJumlah
-                    )
-                  )
-                ).then((_) {
-                  setState(() {} );
-                  });
+                    daftarMenu: daftarMenu,
+                    jumlahPesanan: _jumlahPesanan,
+                    onTambah: _tambahJumlah,
+                    onKurang: _kurangJumlah,
+                  ),
+                ),
+              );
+
+              // Jika pesanan sudah selesai, kosongkan pesanan
+              if (hasil == true) {
+                setState(() {
+                  for (int i = 0; i < _jumlahPesanan.length; i++) {
+                    _jumlahPesanan[i] = 0;
+                  }
+                });
               }
-        )
+            },
+          ),
       );
   }
 }

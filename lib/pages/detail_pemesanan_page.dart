@@ -80,26 +80,35 @@ class _DetailPemesananPageState extends State<DetailPemesananPage> {
   void _selesaikanPesanan() {
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
           title: const Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.green, size: 28),
+              Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 28,
+              ),
               SizedBox(width: 8),
               Text('Pesanan Berhasil'),
             ],
           ),
           content: const Text(
-            'Pesanan kamu sudah berhasil diselesaikan. Terima kasih sudah memesan di AYAMIN!',
+            'Pesanan kamu sudah berhasil diselesaikan. '
+            'Terima kasih sudah memesan di AYAMIN!',
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // tutup dialog
-                Navigator.popUntil(context, (route) => route.isFirst); // kembali ke menu utama
+                // Tutup dialog
+                Navigator.pop(dialogContext);
+
+                // Kembali ke halaman menu
+                // sekaligus mengirim tanda bahwa pesanan selesai
+                Navigator.pop(context, true);
               },
               child: const Text(
                 'OK',
