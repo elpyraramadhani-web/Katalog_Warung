@@ -34,6 +34,6 @@ class TImages {
   static const String jeruk ='assets/images/jeruk.jpg';
   static const String matchaLatte = 'assets/images/matcha_latte.jpg';
 
-  //Gmabar search tidak ada
   static const String emptySearch = 'assets/images/empty_search.png';
+  static const String logo = 'assets/images/logo.png';
 }

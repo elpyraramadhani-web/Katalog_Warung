@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/menu_images.dart';
 import 'data/menu_data.dart';
@@ -7,6 +6,8 @@ import 'models/menu.dart';
 import 'widget/menu_card.dart';
 import 'functions/aturan_pesanan.dart';
 import 'pages/detail_menu_page.dart';
+import 'widget/app_bar.dart';
+import 'widget/checkout_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -104,6 +105,15 @@ class MyApp extends StatelessWidget {
     return total;
   }
 
+  int _hitungJumlahSemuaPesanan(){
+    int total = 0;
+
+    for(final jumlah in _jumlahPesanan){
+      total += jumlah;
+    }
+    return total;
+  }
+
   int _hitungJumlahMenu() {
     int jumlah = 0;
 
@@ -161,7 +171,8 @@ class MyApp extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
-            Column(
+            Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -181,6 +192,7 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
             ),
           ],
         ),
@@ -423,24 +435,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Column(
-          children: [
-            Text(
-              'AYAMIN',
-               style: 
-               TextStyle(
-                fontSize: 20, 
-                fontWeight: FontWeight.bold)),
-            Text(
-              'KASIR WARUNG AYAMIN',
-              style: TextStyle(
-                fontSize: 11, 
-                fontWeight: FontWeight.normal),
-            ),
-          ],
-        ),
-      ),
+      appBar: const AppBarAyamin(),
       body:Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -621,7 +616,7 @@ class MyApp extends StatelessWidget {
                       crossAxisCount: jumlahKolom,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16,
-                      childAspectRatio: 1.45,
+                      mainAxisExtent: 320,
                     ),
                     itemBuilder: (context, index) {
                       final menu = filteredMenus[index];
@@ -650,43 +645,12 @@ class MyApp extends StatelessWidget {
                 }
               ),
             ),
-            const SizedBox(height: 16),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
-                    blurRadius: 10,
-                    offset: const Offset(0, -3),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Total Pesanan:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF3E2723),
-                    ),
-                  ),
-                  Text(
-                    _formatRupiah(_hitungTotalPesanan()),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFC62828),
-                    ),
-                  ),
-                ],
-              )
-            )
+            BottomNavigationBar: CheckoutBar(
+              jumlahPesanan: _hitungJumlahSemuaPesanan(), 
+              totalHarga: _hitungTotalPesanan(),
+              onCheckot: (){
+
+              })
           ],
         )
       )
