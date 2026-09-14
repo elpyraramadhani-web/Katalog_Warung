@@ -620,37 +620,41 @@ class MyApp extends StatelessWidget {
                       mainAxisExtent: 320,
                     ),
                     itemBuilder: (context, index) {
-                      final menu = filteredMenus[index];
-                      final int indexMenu = _getIndexMenu(menu);
+                    final menu = filteredMenus[index];
+                    final indexMenu = _getIndexMenu(menu);
+                    final jumlah = _jumlahPesanan[indexMenu];
 
-                      return MenuCard(
-                        menu: menu,
-                        jumlah: _jumlahPesanan[indexMenu],
-                        onTambah: () {
-                           _tambahJumlah(indexMenu);
-                        },
-                        onKurang: () {
-                           _kurangJumlah(indexMenu);
-                        },
-                        onTap: () {
-                        Navigator.push(
+                    return MenuCard(
+                      menu: menu,
+                      jumlah: jumlah,
+
+                      onTambah: () {
+                        _tambahJumlah(indexMenu);
+                      },
+
+                      onKurang: () {
+                        _kurangJumlah(indexMenu);
+                      },
+
+                      onTap: () async {
+                        final hasil = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => DetailMenuPage(
                               menu: menu,
-                              indexMenu: indexMenu,
-                              daftarMenu: daftarMenu,
-                              jumlahPesanan: _jumlahPesanan,
-                              onTambah: _tambahJumlah,
-                              onKurang: _kurangJumlah,
+                              jumlahAwal: jumlah,
                             ),
                           ),
-                        ).then((_) {
-                          setState(() {});
-                        });
-                      }
-                      );
-                    },
+                        );
+
+                        if (hasil != null) {
+                          setState(() {
+                            _jumlahPesanan[indexMenu] = hasil;
+                          });
+                        }
+                      },
+                    );
+                  },
                   );
                 }
               )
