@@ -633,13 +633,22 @@ class MyApp extends StatelessWidget {
                            _kurangJumlah(indexMenu);
                         },
                         onTap: () {
-                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailMenuPage(menu: menu),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailMenuPage(
+                              menu: menu,
+                              indexMenu: indexMenu,
+                              daftarMenu: daftarMenu,
+                              jumlahPesanan: _jumlahPesanan,
+                              onTambah: _tambahJumlah,
+                              onKurang: _kurangJumlah,
                             ),
-                          );
-                        }
+                          ),
+                        ).then((_) {
+                          setState(() {});
+                        });
+                      }
                       );
                     },
                   );
