@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/data/menu_images.dart';
+import 'package:flutter_application_1/constants/menu_images.dart';
 import 'data/menu_data.dart';
 import 'models/menu.dart';
 import 'widget/menu_card.dart';
@@ -54,7 +54,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-  //Menampilkan daftar mentah apa
   class AyaminAppHomePage extends StatefulWidget {
     const AyaminAppHomePage({super.key});
   
@@ -265,7 +264,7 @@ class MyApp extends StatelessWidget {
                 hintText: 'Cari menu...',
                 prefixIcon: const Icon(
                   Icons.search,
-                  color: Color(0xFF757575),
+                  color: AppColors.grey,
                 ),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -289,7 +288,7 @@ class MyApp extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
                   borderSide: const BorderSide(
-                    color: Color(0xFFC62828),
+                    color: AppColors.primary,
                     width: 2,
                   ),
                 ),

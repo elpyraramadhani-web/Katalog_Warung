@@ -17,7 +17,7 @@ class Menu {
         required this.imagePath,
     });
 
-    //Menegmbalikan status menu berdasarkan tersedia dan jumlah yg masih ada
+    //Mengembalikan status menu berdasarkan tersedia dan jumlah yg masih ada
     String statusMenu(){
         if (!tersedia || porsiTersedia <= 0){
             return "Habis";

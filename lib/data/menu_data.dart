@@ -1,7 +1,6 @@
 import '../models/menu.dart';
-import 'menu_images.dart';
+import '../constants/menu_images.dart';
 
-//Seluruh daftar menu yang ada di warung AYAMIN
 final List<Menu> daftarMenu = [
     //Ayam Geprek
     const Menu(
